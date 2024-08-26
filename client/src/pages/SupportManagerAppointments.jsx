@@ -13,7 +13,7 @@ import axios from "axios";
 import SupportManagerMenu from "../components/layout/SupportManagerMenu";
 import SupportMngrNavbar from "../components/layout/SupportMngrNavbar";
 import Loader from "../components/layout/Loader";
-import { Modal, Form, Input, Rate, notification } from "antd";
+import { Modal, Form, Input, Rate, notification, Radio } from "antd";
 import moment from "moment";
 
 const SupportManagerAppointments = () => {
@@ -101,18 +101,30 @@ const SupportManagerAppointments = () => {
     return new Date(dateString).toLocaleDateString("en-IN", options);
   };
 
-  const getRowStyle = (status) => {
-    switch (status) {
-      case "pending":
-        return { backgroundColor: "rgb(246,241,163)" };
-      case "open":
-        return { backgroundColor: "rgb(41,171,135)", color: "white" };
-      case "closed":
-        return { backgroundColor: "rgb(154,219,185)" };
-      default:
-        return {};
-    }
-  };
+ const getRowStyle = (status) => {
+   switch (status) {
+     case "pending":
+       return {
+         backgroundColor: "#FFD9D6",
+         color: "#FF7A70",
+         fontWeight: "bold",
+       };
+     case "open":
+       return {
+         backgroundColor: "rgb(203,234,205)",
+         color: "green",
+         fontWeight: "bold",
+       };
+     case "closed":
+       return {
+         backgroundColor: "#E3E4DD",
+         color: "rgb(54, 51, 51)",
+         fontWeight: "bold",
+       };
+     default:
+       return {};
+   }
+ };
 
   const handleRowClick = (id) => {
     console.log(id);
@@ -224,20 +236,7 @@ const SupportManagerAppointments = () => {
                 onChange={handleFilterChange}
               />
             </Form.Item>
-            <Form.Item label="Filter by Date" className="custom-form-item">
-              <FormControl variant="outlined" size="small">
-                <Select
-                  value={filterOption}
-                  onChange={handleFilterOptionChange}
-                  label="Date Filter"
-                >
-                  <MenuItem value="all">All</MenuItem>
-                  <MenuItem value="day">Today</MenuItem>
-                  <MenuItem value="week">This Week</MenuItem>
-                  <MenuItem value="month">This Month</MenuItem>
-                </Select>
-              </FormControl>
-            </Form.Item>
+
             <Form.Item label="Filter by Status" className="custom-form-item">
               <FormControl variant="outlined" size="small">
                 <Select
@@ -250,6 +249,17 @@ const SupportManagerAppointments = () => {
                   <MenuItem value="pending">Unresolved</MenuItem>
                 </Select>
               </FormControl>
+            </Form.Item>
+            <Form.Item className="custom-form-item">
+              <Radio.Group
+                value={filterOption}
+                onChange={handleFilterOptionChange}
+              >
+                <Radio.Button value="all">All</Radio.Button>
+                <Radio.Button value="day">Today</Radio.Button>
+                <Radio.Button value="week">This Week</Radio.Button>
+                <Radio.Button value="month">This Month</Radio.Button>
+              </Radio.Group>
             </Form.Item>
           </Form>
         </div>
